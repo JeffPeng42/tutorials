@@ -14,6 +14,9 @@ import com.baeldung.crud.entities.User;
 import com.baeldung.crud.repositories.UserRepository;
 
 @Controller
+// 不要使用 @RestController 註解
+// 因為@RestController = @Controller @ResponseBody 
+// 這樣返回給前臺的一定是json型別的資料
 public class UserController {
     
     private final UserRepository userRepository;
@@ -25,13 +28,13 @@ public class UserController {
     
     @GetMapping("/signup")
     public String showSignUpForm(User user) {
-        return "add-user";
+		return "add-user22";
     }
     
     @PostMapping("/adduser")
     public String addUser(@Valid User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-user";
+			return "add-user22";
         }
         
         userRepository.save(user);
@@ -65,4 +68,10 @@ public class UserController {
         model.addAttribute("users", userRepository.findAll());
         return "index";
     }
+	
+	@GetMapping("/index")
+	public String showUserList(Model model) {
+		model.addAttribute("users", userRepository.findAll());
+		return "index";
+	}
 }
